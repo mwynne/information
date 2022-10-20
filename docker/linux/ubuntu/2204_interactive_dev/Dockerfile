@@ -16,7 +16,7 @@ RUN apt update && apt install vim less unzip python3.10 wget gpg tzdata sudo \
 RUN echo $TZ > /etc/timezone
 
 RUN dpkg-reconfigure -f noninteractive tzdata
-RUN apt install awscli -y
+RUN apt install awscli git -y
 
 RUN wget -O- https://apt.releases.hashicorp.com/gpg | \
     gpg --dearmor | \
@@ -29,7 +29,7 @@ RUN echo "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] \
     tee /etc/apt/sources.list.d/hashicorp.list
 RUN apt-add-repository ppa:ansible/ansible
 RUN apt update && DEBIAN_FRONTEND=noninteractive apt install terraform \
-    ansible -y
+    packer ansible -y
 
 RUN groupadd -r ${USER} -g ${GID}
 RUN useradd -m -s /bin/bash -d /home/${USER}/ -u ${UID} -g ${GROUP} \
